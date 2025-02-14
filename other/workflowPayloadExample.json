@@ -1,0 +1,48 @@
+{
+    "name": "Check workflow",
+    "trigger": {
+        "id": "trigger",
+        "type": "API_CALL"
+    },
+    "steps": [
+        {
+            "id": "step1",
+            "type": "action",
+            "action_type": "API_CALL",
+            "next": ["wait_for_10_seconds"]
+        },
+        {
+            "id": "wait_for_10_seconds",
+            "type": "wait_for",
+            "wait_time": {
+                "type": "seconds",
+                "value": 10
+            },
+            "next": ["step2"]
+        },
+        {
+            "id": "step2",
+            "type": "condition",
+            "condition": {
+                "field": "is_active",
+                "type": "equals",
+                "value": true,
+                "true_next": ["step3"],
+                "false_next": ["step4"]
+            }
+        },
+        {
+            "id": "step3",
+            "type": "action",
+            "action_type": "EMAIL",
+            "next": null
+        },
+        {
+            "id": "step4",
+            "type": "action",
+            "action_type": "DB_UPDATE",
+            "next": null
+        }
+    ]
+    
+}
